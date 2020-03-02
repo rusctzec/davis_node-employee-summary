@@ -1,0 +1,17 @@
+{
+  "name": "employee-generator",
+  "version": "1.0.0",
+  "description": "Demo program to generate and display a directory of employees",
+  "main": "employee-generator.js",
+  "dependencies": {
+    "inquirer": "^7.0.5",
+    "npm": "^6.14.1",
+    "uuid": "^7.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
