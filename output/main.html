@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Directory</title>
+    <style>
+        body, html {
+            background-color: #ee6050;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100%;
+            margin: 0px;
+        }
+        #header {
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            line-height: 50px;
+            width: 85%;
+            padding: 15px;
+            margin: 15px auto 0;
+            text-align: center;
+            background-color: #ff8070;
+            color: #ffffff;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        #employees {
+            min-height: 100vh;
+            width: 85%;
+            overflow: none;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            align-content: flex-start;
+            justify-content: center;
+            background-color: #ffffff;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        .employee-entry {
+            margin: 10px;
+            padding: 10px;  
+            min-height: 250px;
+            width: 250px;
+        }
+        .employee-inner {
+            display: flex;
+            flex-direction: column;
+            background-color: #ededed;
+            margin: 0px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border: solid 1px black;
+            min-height: 250px;
+            width: 250px;
+        }
+
+        .employee-inner div {
+            padding: 5px 10px;
+        }
+        
+        .employee-subtable {
+            position: relative;
+            background-color: #dddddd;
+            margin: 0 auto;
+            width: 80%;
+            border: solid 1px #a9a9a9;
+            top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .employee-header {
+            display: flex;
+            flex-direction: column;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            line-height: 50px;
+            margin: 0 auto;
+            text-align: center;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: bold;
+            border: solid #898989 1px;
+            border-bottom: none;
+            width: 250px;
+            height: 88px;
+        }
+        .employee-header * {
+            margin: 0 auto;
+            padding: 0px;
+        }
+        .employee-header hr {
+            width: 90%;
+            margin-top: 10px;
+            border: 1px solid white;
+            background-color: white;
+        }
+        .employee-name {
+            font-size: 40px;
+            line-height: 40px;
+            margin-top: 5px;
+        }
+        .employee-role {
+            font-size: 20px;
+            line-height: 30px;
+        }
+        .employee .employee-header {
+            background-color: #FFB5C5;
+        }
+        .manager .employee-header {
+            background-color: #FF82AF;
+        }
+        .engineer .employee-header {
+            background-color: #BDB6F9;
+        }
+        .intern .employee-header {
+            background-color: #ffccdd;
+        }
+
+        .place-filler {
+            flex-grow: 1;
+        }
+
+        .employee-id {
+            margin-top: 10px;
+            font-size: 10px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">Employee Directory</div>
+    <div id="employees"></div>
+    <script>
+        divEmployees = document.getElementById("employees");
+        fetch("employees.json")
+        .then(response => response.json())
+        .then(json => {
+            json.forEach(employee => {
+                divEmployees.innerHTML += `<div class="employee-entry ${employee.role.toLowerCase()}">`+
+                `<div class="employee-header"><span class="employee-name">${employee.name}</span><hr><span class="employee-role">${employee.role}</span></div>`+
+                `<div class="employee-inner"><div class="employee-subtable">`+
+                (employee.officeNumber ? `<div employee-office-number>Office #: ${employee.officeNumber}</div><hr>` : '')+
+                (employee.username ? `<div employee-username>Username: <a href="https://github.com/${employee.username}">${employee.username}</a></div><hr>` : '')+
+                (employee.school ? `<div employee-school>School: ${employee.school}</div><hr>` : '')+
+                `<div class="employee-email">Email: <a href="mailto:${employee.email}">${employee.email}</a></div>`+
+                `</div>`+ // close subtable
+                `<div class="place-filler"></div>`+
+                `<div class="employee-id"><strong>ID:</strong> ${employee.id}</div>`+
+                `</div>`+ // close inner
+                `</div>` // close entry
+            });
+        })
+        .catch(err => {
+            divEmployees.innerHTML += "could not display employees";
+            window.fetcherr = err;
+            throw err;
+        })
+    </script>
+</body>
+</html>

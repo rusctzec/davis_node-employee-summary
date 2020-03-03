@@ -1,9 +1,9 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const types = require('./employee-types');
+const types = require('./lib/employee-types');
 
 let employees;
-fs.readFile("employees.json", function(err, data) {
+fs.readFile("output/employees.json", function(err, data) {
     // try to load existing employee data
     if (err) {
         console.log("Could not read employees.json. A new file will be created.")
@@ -36,7 +36,6 @@ async function newEmployeePrompts() {
         }
     ]);
     let newEmployee;
-    console.log(answers);
     let ans2;
     switch (answers.role) {
         case "Manager":
@@ -75,7 +74,7 @@ async function newEmployeePrompts() {
     }
     employees.push(newEmployee);
     console.log("Employee complete")
-    fs.writeFile("employees.json", JSON.stringify(employees), err => {if (err) throw err});
+    fs.writeFile("output/employees.json", JSON.stringify(employees), err => {if (err) throw err});
     let additional = await inquirer.prompt([
         {
             message: "Add an additional employee?",
